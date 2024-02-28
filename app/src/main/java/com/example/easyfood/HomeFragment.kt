@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyfood.databinding.FragmentHomeBinding
 import com.example.easyfood.pojo.Meal
 import com.example.easyfood.pojo.MealList
@@ -18,6 +19,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.bumptech.glide.Glide
+import com.example.easyfood.adapters.MostPopularRecyclerAdapter
+import com.example.easyfood.pojo.CategoryMeals
 import com.example.easyfood.viewModel.HomeViewModel
 
 class HomeFragment : Fragment() {
@@ -30,10 +33,11 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeMvvm: HomeViewModel
     private lateinit var randomMeal: Meal
+    private lateinit var popularItemsAdapter: MostPopularRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeMvvm = ViewModelProviders.of(this)[HomeViewModel::class.java]
-
+popularItemsAdapter=MostPopularRecyclerAdapter()
     }
 
     override fun onCreateView(
@@ -48,10 +52,31 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        preparepopularitemRecyclerView()
+
         homeMvvm.getRandomMeal()
         observerRandomMeal()
         onRandomMealClick()
 
+        homeMvvm.getPopularItems()
+        observePopularItemsLiveData()
+
+    }
+
+    private fun preparepopularitemRecyclerView() {
+binding.recViewMealsPopular.apply {
+    layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+    adapter=popularItemsAdapter
+}    }
+
+    private fun observePopularItemsLiveData() {
+        homeMvvm.observerPopularItemsLiveData().observe(viewLifecycleOwner
+        ) {
+            mealList->
+            popularItemsAdapter.setMealList(mealsList = mealList as ArrayList<CategoryMeals>)
+
+        }
     }
 
     private fun onRandomMealClick() {
