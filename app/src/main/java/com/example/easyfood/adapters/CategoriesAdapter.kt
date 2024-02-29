@@ -13,6 +13,7 @@ class CategoriesRecyclerAdapter : RecyclerView.Adapter<CategoriesRecyclerAdapter
     var onItemClick : ((Category)->Unit)?=null
     private lateinit var onLongCategoryClick:OnLongCategoryClick
 
+
     fun setCategoryList(categoryList: List<Category>){
         this.categoryList = categoryList
         notifyDataSetChanged()
