@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.easyfood.pojo.Category
 import com.example.easyfood.databinding.CategoryitemBinding
+import com.example.easyfood.pojo.CategoryList
 
 class CategoriesRecyclerAdapter : RecyclerView.Adapter<CategoriesRecyclerAdapter.CategoryViewHolder>() {
     private var categoryList:List<Category> = ArrayList()
-    private lateinit var onItemClick: OnItemCategoryClicked
+    var onItemClick : ((Category)->Unit)?=null
     private lateinit var onLongCategoryClick:OnLongCategoryClick
 
     fun setCategoryList(categoryList: List<Category>){
@@ -23,9 +24,9 @@ class CategoriesRecyclerAdapter : RecyclerView.Adapter<CategoriesRecyclerAdapter
 
 
 
-    fun onItemClicked(onItemClick: OnItemCategoryClicked){
-        this.onItemClick = onItemClick
-    }
+//    fun onItemClicked(onItemClick: OnItemCategoryClicked){
+//        this.onItemClick = onItemClick
+//    }
 
     class CategoryViewHolder(val binding:CategoryitemBinding):RecyclerView.ViewHolder(binding.root)
 
@@ -40,14 +41,13 @@ class CategoriesRecyclerAdapter : RecyclerView.Adapter<CategoriesRecyclerAdapter
             Glide.with(holder.itemView)
                 .load(categoryList[position].strCategoryThumb)
                 .into(imgCategory)
+            holder.binding.tvCategoryName.text = categoryList[position].strCategory
+            holder.itemView.setOnClickListener {
+                onItemClick?.invoke(categoryList[position])
+            }
         }
-
-        holder.itemView.setOnClickListener {
-            onItemClick.onClickListener(categoryList[position])
-        }
-
-
     }
+
 
     override fun getItemCount(): Int {
         return categoryList.size

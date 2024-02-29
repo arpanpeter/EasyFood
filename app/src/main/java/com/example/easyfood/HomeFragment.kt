@@ -27,6 +27,8 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "package com.example.easyfood.idMeal"
         const val MEAL_NAME = "package com.example.easyfood.nameMeal"
         const val MEAL_THUMB = "package com.example.easyfood.thumbMeal"
+        const val CATEGORY_NAME="package.com.example.easyfood.categoryName"
+
     }
 
     private lateinit var binding: FragmentHomeBinding
@@ -65,7 +67,16 @@ prepareCategoriesRecyclerView()
 
         homeMvvm.getCategories()
         observeCategoriesLiveData()
+        onCategoryClick()
 
+    }
+
+    private fun onCategoryClick() {
+        categoriesRecyclerAdapter.onItemClick={category ->
+            val intent=Intent(activity,CategoryActivity::class.java)
+            intent.putExtra(CATEGORY_NAME,category.strCategory)
+            startActivity(intent)
+        }
     }
 
     private fun prepareCategoriesRecyclerView() {
