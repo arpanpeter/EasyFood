@@ -13,6 +13,8 @@
             android:id="@+id/img_meal"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:src="@drawable/yt"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +29,8 @@
             android:text="fast food"
             android:textColor="#232323"
             android:gravity="center"
-            android:textSize="18sp"
+            android:maxLines="2"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/img_meal"
             app:layout_constraintStart_toStartOf="@id/img_meal"
             app:layout_constraintTop_toBottomOf="@+id/img_meal" />
