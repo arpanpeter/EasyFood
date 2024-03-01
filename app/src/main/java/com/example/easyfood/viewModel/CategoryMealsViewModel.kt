@@ -21,12 +21,10 @@ class CategoryMealsViewModel : ViewModel() {
                     call: Call<MealsByCategoryList>,
                     response: Response<MealsByCategoryList>
                 ) {
-                    if (response.isSuccessful) {
+
                         response.body()?.let { mealsList ->
                             mealsLiveData.postValue(mealsList.meals)
-                        }
-                    } else {
-                        return
+
                     }
                 }
 

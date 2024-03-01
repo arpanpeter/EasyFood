@@ -36,18 +36,16 @@ class CategoriesRecyclerAdapter : RecyclerView.Adapter<CategoriesRecyclerAdapter
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.binding.apply {
-            tvCategoryName.text = categoryList[position].strCategory
-
-            Glide.with(holder.itemView)
-                .load(categoryList[position].strCategoryThumb)
-                .into(imgCategory)
-            holder.binding.tvCategoryName.text = categoryList[position].strCategory
-            holder.itemView.setOnClickListener {
-                onItemClick?.invoke(categoryList[position])
-            }
+        val currentItem = categoryList[position]
+        holder.binding.tvCategoryName.text = currentItem.strCategory
+        Glide.with(holder.itemView)
+            .load(currentItem.strCategoryThumb)
+            .into(holder.binding.imgCategory)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(currentItem)
         }
     }
+
 
 
     override fun getItemCount(): Int {

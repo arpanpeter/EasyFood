@@ -9,33 +9,33 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.easyfood.adapters.CategoryMealsAdapter
 import com.example.easyfood.databinding.ActivityCategoryBinding
+import com.example.easyfood.pojo.MealsByCategory
 import com.example.easyfood.viewModel.CategoryMealsViewModel
 
 class CategoryActivity : AppCompatActivity() {
     lateinit var binding: ActivityCategoryBinding
-    lateinit var categoryMealsViewModel:CategoryMealsViewModel
+    lateinit var categoryMealsViewModel: CategoryMealsViewModel
     lateinit var categoryMealsAdapter: CategoryMealsAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityCategoryBinding.inflate(layoutInflater)
+        binding = ActivityCategoryBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
         prepareRecyclerView()
-        categoryMealsViewModel=ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
+        categoryMealsViewModel = ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!)
-categoryMealsViewModel.observeMealsLiveData().observe(this, Observer { mealsList->
-    binding.tvCategoryCount.text=mealsList.size.toString()
-    categoryMealsAdapter.setMealsList(mealsList)
+        categoryMealsViewModel.observeMealsLiveData().observe(this, Observer { mealsList ->
+            binding.tvCategoryCount.text = mealsList.size.toString()
+            categoryMealsAdapter.setMealsList(mealsList as ArrayList<MealsByCategory>)
 
-})
+        })
     }
 
     private fun prepareRecyclerView() {
-categoryMealsAdapter= CategoryMealsAdapter()
-
-
-    binding.mealRecyclerview.apply {
-        layoutManager=GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
-        adapter=categoryMealsAdapter
-    }}
+        categoryMealsAdapter = CategoryMealsAdapter()
+        binding.mealRecyclerview.apply {
+            layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+            adapter = categoryMealsAdapter
+        }
+    }
 }
