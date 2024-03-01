@@ -36,6 +36,7 @@ class CategoryActivity : AppCompatActivity() {
         binding.mealRecyclerview.apply {
             layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
             adapter = categoryMealsAdapter
+
         }
     }
 }
