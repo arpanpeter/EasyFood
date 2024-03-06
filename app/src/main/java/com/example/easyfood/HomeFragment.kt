@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "package com.example.easyfood.idMeal"
         const val MEAL_NAME = "package com.example.easyfood.nameMeal"
         const val MEAL_THUMB = "package com.example.easyfood.thumbMeal"
-        const val CATEGORY_NAME="package.com.example.easyfood.categoryName"
+        const val CATEGORY_NAME = "package.com.example.easyfood.categoryName"
 
     }
 
@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeMvvm = ViewModelProviders.of(this)[HomeViewModel::class.java]
-popularItemsAdapter=MostPopularRecyclerAdapter()
+        popularItemsAdapter = MostPopularRecyclerAdapter()
     }
 
     override fun onCreateView(
@@ -56,7 +56,7 @@ popularItemsAdapter=MostPopularRecyclerAdapter()
         super.onViewCreated(view, savedInstanceState)
 
         preparepopularitemRecyclerView()
-prepareCategoriesRecyclerView()
+        prepareCategoriesRecyclerView()
         homeMvvm.getRandomMeal()
         observerRandomMeal()
         onRandomMealClick()
@@ -72,9 +72,9 @@ prepareCategoriesRecyclerView()
     }
 
     private fun onCategoryClick() {
-        categoriesRecyclerAdapter.onItemClick={category ->
-            val intent=Intent(activity,CategoryActivity::class.java)
-            intent.putExtra(CATEGORY_NAME,category.strCategory)
+        categoriesRecyclerAdapter.onItemClick = { category ->
+            val intent = Intent(activity, CategoryActivity::class.java)
+            intent.putExtra(CATEGORY_NAME, category.strCategory)
             startActivity(intent)
         }
     }
@@ -89,7 +89,7 @@ prepareCategoriesRecyclerView()
 
 
     private fun observeCategoriesLiveData() {
-        homeMvvm.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer { categories->
+        homeMvvm.observeCategoriesLiveData().observe(viewLifecycleOwner, Observer { categories ->
             categories.forEach { category ->
                 categoriesRecyclerAdapter.setCategoryList(categories)
 
@@ -99,26 +99,26 @@ prepareCategoriesRecyclerView()
     }
 
     private fun onPopularItemClick() {
-        popularItemsAdapter.onItemClick={
-            meal->
-            val intent=Intent(activity,activity_meal::class.java)
-            intent.putExtra(MEAL_ID,meal.idMeal)
-            intent.putExtra(MEAL_NAME,meal.strMeal)
-            intent.putExtra(MEAL_THUMB,meal.strMealThumb)
+        popularItemsAdapter.onItemClick = { meal ->
+            val intent = Intent(activity, activity_meal::class.java)
+            intent.putExtra(MEAL_ID, meal.idMeal)
+            intent.putExtra(MEAL_NAME, meal.strMeal)
+            intent.putExtra(MEAL_THUMB, meal.strMealThumb)
             startActivity(intent)
         }
     }
 
     private fun preparepopularitemRecyclerView() {
-binding.recViewMealsPopular.apply {
-    layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-    adapter=popularItemsAdapter
-}    }
+        binding.recViewMealsPopular.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = popularItemsAdapter
+        }
+    }
 
     private fun observePopularItemsLiveData() {
-        homeMvvm.observerPopularItemsLiveData().observe(viewLifecycleOwner
-        ) {
-            mealList->
+        homeMvvm.observerPopularItemsLiveData().observe(
+            viewLifecycleOwner
+        ) { mealList ->
             popularItemsAdapter.setMealList(mealsList = mealList as ArrayList<MealsByCategory>)
 
         }
@@ -135,14 +135,14 @@ binding.recViewMealsPopular.apply {
     }
 
     private fun observerRandomMeal() {
-        homeMvvm.observeRandomMealLiveData().observe(viewLifecycleOwner, { meal ->
+        homeMvvm.observeRandomMealLiveData().observe(viewLifecycleOwner) { meal ->
 
             Glide.with(this@HomeFragment)
                 .load(meal!!.strMealThumb)
                 .into(binding.imgRandomMeal)
-            this.randomMeal=meal
+            this.randomMeal = meal
 
-        })
+        }
     }
 }
 

@@ -5,7 +5,8 @@
     android:layout_height="90dp"
     android:elevation="3dp"
     app:cardCornerRadius="10dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    android:layout_marginRight="20dp">
 
     <ImageView
         android:id="@+id/img_popular_meal_item"
